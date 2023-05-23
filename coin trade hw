@@ -1,0 +1,44 @@
+class Account {
+  constructor(balance = 0) {
+    this.balance = balance;
+    this.transactions = [];
+  }
+
+  withdraw(amount) {
+    if (amount > this.balance) {
+      console.log("Insufficient funds");
+      return;
+    }
+
+    this.balance -= amount;
+    this.transactions.push({ type: "withdrawal", amount: -amount });
+    console.log(`Withdrawal of ${amount} successful`);
+  }
+
+  deposit(amount) {
+    this.balance += amount;
+    this.transactions.push({ type: "deposit", amount });
+    console.log(`Deposit of ${amount} successful`);
+  }
+
+  getTransactionHistory() {
+    return this.transactions;
+  }
+
+  getBalance() {
+    return this.balance;
+  }
+}
+
+// Example usage
+const account1 = new Account(500.0);
+account1.withdraw(200.0); // Withdraw 200 from account1
+account1.deposit(100.0); // Deposit 100 to account1
+console.log(account1.getBalance()); // Output: 400
+console.log(account1.getTransactionHistory()); // Output: [{type: "withdrawal", amount: -200}, {type: "deposit", amount: 100}]
+
+const account2 = new Account(1000.0);
+account2.deposit(500.0); // Deposit 500 to account2
+account2.withdraw(800.0); // Withdraw 800 from account2 (not enough balance)
+console.log(account2.getBalance()); // Output: 500 (no change due to insufficient funds)
+console.log(account2.getTransactionHistory()); // Output: [{type: "deposit", amount: 500}]
